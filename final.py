@@ -43,7 +43,7 @@ for a in table.find_all('a', href=True):
     templinks.append(a)
 
 if not templinks:
-    print("Table loading error, please try again.")
+    print("Table loading error, please try running final.py again.")
 
 for i in range(len(df[0])):
     temp_info = {'Start Date:': df[0][i][0],
