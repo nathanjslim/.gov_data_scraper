@@ -19,7 +19,7 @@ url = 'https://www.fda.gov/news-events/fda-meetings-conferences-and-workshops/fd
 wd = webdriver.Chrome('chromedriver', options=options)
 wd.get(url)
 
-delay = 3
+delay = 5
 try:
     myElem = WebDriverWait(wd, delay).until(EC.presence_of_element_located((By.ID, 'DataTables_Table_0')))
     print("Page is ready!")
@@ -42,6 +42,9 @@ templinks = []
 for a in table.find_all('a', href=True):
     templinks.append(a)
 
+if not templinks:
+    print("Table loading error, please try again.")
+
 for i in range(len(df[0])):
     temp_info = {'Start Date:': df[0][i][0],
                  'End Date:': df[0][i][1],
@@ -50,20 +53,12 @@ for i in range(len(df[0])):
                  'Center': df[0][i][4],
                  }
 
-    if i == 0:
-        event_link = str(templinks[0])
-        event_link = re.search('"(.*?)"', event_link).group(1)
-        event_type_link = str(templinks[1])
-        event_type_link = re.search('"(.*?)"', event_type_link).group(1)
-        center_link = str(templinks[2])
-        center_link = re.search('"(.*?)"', center_link).group(1)
-    else:
-        event_link = str(templinks[(i*3)])
-        event_link = re.search('"(.*?)"', event_link).group(1)
-        event_type_link = str(templinks[((i*3)+1)])
-        event_type_link = re.search('"(.*?)"', event_type_link).group(1)
-        center_link = str(templinks[((i*3)+2)])
-        center_link = re.search('"(.*?)"', center_link).group(1)
+    event_link = str(templinks[(i*3)])
+    event_link = re.search('"(.*?)"', event_link).group(1)
+    event_type_link = str(templinks[((i*3)+1)])
+    event_type_link = re.search('"(.*?)"', event_type_link).group(1)
+    center_link = str(templinks[((i*3)+2)])
+    center_link = re.search('"(.*?)"', center_link).group(1)
 
     temp_link = {
         'Event': "https://www.fda.gov" + event_link,
