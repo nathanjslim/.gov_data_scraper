@@ -62,7 +62,7 @@ for i in range(len(df[0])):
 
     temp_link = {
         'Event': "https://www.fda.gov" + event_link,
-        'Event_type:': "https://www.fda.gov" + event_type_link,
+        'Event type:': "https://www.fda.gov" + event_type_link,
         'Center': "https://www.fda.gov" + center_link,
         }
 
